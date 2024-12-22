@@ -1,0 +1,20 @@
+Idea 1:
+
+Two sockets, one socket per chat client each. They function as two curers that hand information to each other at the
+server side and then send them over to their connection.
+
+
+Idea 2:
+
+One socket that handles both client sides. It functions as one curer between two people.
+
+
+
+--> Final decision:
+2 separate sockets are better. EG: when one client disconnects then the other client can sill send data over, the socket
+for the disconnected client just stores the data briefly and waits for the client to connect again. Advantage of that
+being that the data in the cache is always clearly part of a client and there dont have to be mechanisms in place
+to tell data apart when using one socket with a shard cache. But... you could also have to caches...?
+
+I mean having two sockets is kinda betta cause when you have one socket you always have to be on topf of what packets
+goes where and which packet belongs to which socket connection and what destination.
