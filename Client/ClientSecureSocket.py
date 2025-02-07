@@ -1,11 +1,7 @@
-import hashlib
 from socket import socket
-import os
-import sys
+import hashlib
+from EnDeCrypt import Symmetrical, ECDH
 
-import time
-
-from EnDeCrypt import ECDH, Symmetrical
 
 
 class InternalCodes:
@@ -279,40 +275,4 @@ class Connection(socket):
 
     def __add_encryption_layer(self, __data, __key) -> bytes: return self.encryption_inst.encryptStringSymmetrical(__data, __key)
     def __remove_encryption_layer(self, __data, __key) -> bytes: return self.encryption_inst.decryptStringSymmetrical(__data, __key)
-
-
-class SimpleTerminalChat:
-    connection: Connection
-
-    def __init__(self):
-        self.connection = Connection()
-
-    def test(self):  # For beginning / debugging purposes
-        print(f"Sending test message at {time.time()}...")
-        self.connection.send(f"Hi at {time.time()}")
-        print(f"Waiting for response at {time.time()}...")
-        data = self.connection.recv()
-        print(f"Received response at {time.time()}!:\n{data}")
-        print(f"Sending connection tier-down signal at {time.time()}...")
-        self.connection.tier_down_connection()
-        print(f"Connection was ended successfully at {time.time()}! Congrats!")
-        exit("Exiting...")
-
-    def run(self):
-        self.test()
-
-
-class PagerChat:
-    # Idea: have a pager like chat in the terminal, or gui like application
-    # To be coded soon...
-    pass
-
-
-
-
-if __name__ == '__main__':
-    simpleChat = SimpleTerminalChat()
-    simpleChat.run()
-
-
 
